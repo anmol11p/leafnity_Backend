@@ -1,0 +1,21 @@
+import express from "express";
+import AuthRouter from "./Routers/AuthRoutes.js";
+import { errorMiddleware } from "./Middleware/Error.middleware.js";
+import cors from "cors";
+import productRouter from "./Routers/productRoutes.js";
+import cartRouter from "./Routers/cartRoutes.js";
+import orderRouter from "./Routers/orderRoutes.js";
+import AddressRouter from "./Routers/AddressRoutes.js";
+const app = express();
+app.use(cors());
+app.use(express.json());
+app.use("/", AuthRouter);
+app.use("/products", productRouter);
+app.use("/cart", cartRouter);
+app.use("/order", orderRouter);
+app.use("/address", AddressRouter);
+const PORT = process.env.PORT;
+app.use(errorMiddleware);
+app.listen(PORT, () => {
+  console.log(`server is listening on http://localhost:${PORT}/`);
+});
