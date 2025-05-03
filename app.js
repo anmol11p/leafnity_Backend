@@ -14,7 +14,7 @@ app.use("/products", productRouter);
 app.use("/cart", cartRouter);
 app.use("/order", orderRouter);
 app.use("/address", AddressRouter);
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 app.use(errorMiddleware);
 app.listen(PORT, () => {
   console.log(`server is listening on http://localhost:${PORT}/`);
