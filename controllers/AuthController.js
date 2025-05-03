@@ -122,7 +122,6 @@ const changePassword = async (req, res, next) => {
   }
 };
 
-// const  = async (req, res, next) => {
 const ForgotPassword = async (req, res, next) => {
   try {
     const { email } = req.body;
@@ -142,9 +141,8 @@ const ForgotPassword = async (req, res, next) => {
     const BASE_URL =
       process.env.FRONTEND_URL?.trim() || "http://localhost:5173";
     const resetLink = `${BASE_URL}/reset-password/${resetToken}`;
-    // await sendResetEmail(existingUser.email, resetLink);
     const resp = await sendResetPassword(existingUser.email, resetLink);
-    console.log("resp", resp);
+    // console.log("resp", resp);
     if (!resp.success) {
       return res
         .status(400)

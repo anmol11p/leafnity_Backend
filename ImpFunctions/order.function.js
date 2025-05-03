@@ -42,7 +42,7 @@ const create = async (
         items: true,
       },
     });
-    console.log(resp);
+    // console.log(resp);
     return resp;
   } catch (error) {
     return error;
