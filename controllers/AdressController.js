@@ -1,5 +1,6 @@
 import {
   addressDelete,
+  checkOrder_with_AdressId,
   ExistAddress,
   getAddressById,
   GetAllAddress,
@@ -35,20 +36,26 @@ const deleteAddress = async (req, res, next) => {
     if (!addressId) {
       return res.status(404).json({ message: "address Id is not founded!!" });
     }
-    // addressId = Number(addressId);
     const addressExist = await ExistAddress(addressId);
     if (!addressExist) {
       return res
         .status(400)
         .json({ message: "this address is not existed in DB to be deleted!!" });
     }
-    const deleteAddress = await addressDelete(addressId);
-    if (deleteAddress?.code === "P2003") {
+    // check whether addressId is not linked with order
+    const { id } = req.user;
+    const orderWithAddressId = await checkOrder_with_AdressId(id, addressId);
+    if (orderWithAddressId instanceof Error) {
+      return res
+        .status(500)
+        .json({ message: "Server error", error: orderWithAddressId.message });
+    }
+    if (orderWithAddressId) {
       return res.status(401).json({
         message: "This address is linked to an order and cannot be deleted.",
       });
     }
-
+    await addressDelete(addressId);
     return res.status(200).json({ message: "address deleted successfully" });
   } catch (error) {
     next(error);

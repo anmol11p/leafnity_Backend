@@ -19,6 +19,7 @@ const UserSignUp = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
     const existingUser = await checkUserByEmail(email);
+    // console.log(existingUser);
     if (existingUser) {
       return res.status(400).json({
         message: `${existingUser.email} is already present plz try with new email id`,

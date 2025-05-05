@@ -97,6 +97,19 @@ const getAddressById = async (id) => {
   }
 };
 
+const checkOrder_with_AdressId = async (userId, addressId) => {
+  try {
+    const resp = await prisma.customerOrder.findFirst({
+      where: {
+        userId,
+        addressId,
+      },
+    });
+    return resp;
+  } catch (error) {
+    return error;
+  }
+};
 export {
   saveAddress,
   GetAllAddress,
@@ -104,4 +117,5 @@ export {
   ExistAddress,
   getAddressById,
   updateAddressbyId,
+  checkOrder_with_AdressId,
 };
