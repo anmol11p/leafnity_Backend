@@ -10,9 +10,8 @@ export async function sendResetPassword(email, link) {
 
     // Send the email
     const { data, error } = await resend.emails.send({
-      from: "no-reply@resend.dev", // Use a default email address from Resend
-
-      to: "pandayanmol6@gmail.com" || email,
+      from: "onboarding@resend.dev",
+      to: email,
       subject: "forgot password link",
       html: emailBody,
     });
